@@ -7,6 +7,8 @@ import com.google.common.base.Objects;
  */
 public class ImageMetadataDto {
 
+    private Integer id;
+
     private String filePath;
 
     private String dimension;
@@ -22,13 +24,22 @@ public class ImageMetadataDto {
     public ImageMetadataDto() {
     }
 
-    public ImageMetadataDto(String filePath, String dimension, Integer dpi, Integer bitsPerPixel, String format, String colorType) {
+    public ImageMetadataDto(Integer id, String filePath, String dimension, Integer dpi, Integer bitsPerPixel, String format, String colorType) {
+        this.id = id;
         this.filePath = filePath;
         this.dimension = dimension;
         this.dpi = dpi;
         this.bitsPerPixel = bitsPerPixel;
         this.format = format;
         this.colorType = colorType;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFilePath() {
@@ -82,6 +93,7 @@ public class ImageMetadataDto {
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
+                .add("id", id)
                 .add("filePath", filePath)
                 .add("dimension", dimension)
                 .add("dpi", dpi)

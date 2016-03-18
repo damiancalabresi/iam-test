@@ -2,6 +2,7 @@ package com.dcalabresi.iamtest.services;
 
 import com.dcalabresi.iamtest.entities.ImageMetadata;
 import com.dcalabresi.iamtest.entities.WatchDirectory;
+import com.dcalabresi.iamtest.repository.ImageMetadataRepository;
 import com.dcalabresi.iamtest.repository.WatchDirectoryRepository;
 import com.dcalabresi.iamtest.utils.ImageMetadataReader;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ public class WatchDirectoryService {
 
     @Autowired
     WatchDirectoryRepository watchDirectoryRepository;
+
+    @Autowired
+    ImageMetadataRepository imageMetadataRepository;
 
     private static ConcurrentHashMap<Integer, List<ImageMetadata>> watchMetadata = new ConcurrentHashMap<>();
 
@@ -51,12 +56,11 @@ public class WatchDirectoryService {
     }
 
     public List<ImageMetadata> getDirectoryMetadataList(Integer watchDirectoryId) {
-        List<ImageMetadata> imageMetadatas = watchMetadata.get(watchDirectoryId);
-        if(imageMetadatas==null) imageMetadatas = new ArrayList<>();
-        return imageMetadatas;
+        return imageMetadataRepository.findByWatchDirectoryId(watchDirectoryId);
     }
 
     @Scheduled(fixedRate = 5000)
+    @Transactional
     public void scanWatchDirectoryList() {
         logger.info("Scanning watch directory list");
         List<WatchDirectory> watchDirectories = watchDirectoryRepository.findAll();
@@ -67,6 +71,7 @@ public class WatchDirectoryService {
     }
 
     private void scanWatchDirectory(WatchDirectory watchDirectory) {
+        imageMetadataRepository.deleteByWatchDirectoryId(watchDirectory.getId());
         List<ImageMetadata> imageMetadataList = new ArrayList<>();
         String directory = watchDirectory.getDirectory();
         File dirFile = new File(directory);
@@ -74,10 +79,11 @@ public class WatchDirectoryService {
         for (File file : files) {
             ImageMetadata imageMetadata = ImageMetadataReader.readMetadataFromFile(file);
             if(imageMetadata!=null) {
+                imageMetadata.setWatchDirectory(watchDirectory);
                 imageMetadataList.add(imageMetadata);
             }
         }
-        watchMetadata.put(watchDirectory.getId(), imageMetadataList);
+        imageMetadataRepository.save(imageMetadataList);
     }
 
 }

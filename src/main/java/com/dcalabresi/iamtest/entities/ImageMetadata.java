@@ -2,8 +2,7 @@ package com.dcalabresi.iamtest.entities;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by damian on 3/18/16.
@@ -12,6 +11,9 @@ import javax.persistence.Id;
 public class ImageMetadata {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
     private String filePath;
 
     private String dimension;
@@ -24,6 +26,9 @@ public class ImageMetadata {
 
     private String colorType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private WatchDirectory watchDirectory;
+
     public ImageMetadata() {
     }
 
@@ -34,6 +39,14 @@ public class ImageMetadata {
         this.bitsPerPixel = bitsPerPixel;
         this.format = format;
         this.colorType = colorType;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFilePath() {
@@ -84,6 +97,14 @@ public class ImageMetadata {
         this.colorType = colorType;
     }
 
+    public WatchDirectory getWatchDirectory() {
+        return watchDirectory;
+    }
+
+    public void setWatchDirectory(WatchDirectory watchDirectory) {
+        this.watchDirectory = watchDirectory;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -93,6 +114,7 @@ public class ImageMetadata {
                 .add("bitsPerPixel", bitsPerPixel)
                 .add("format", format)
                 .add("colorType", colorType)
+                .add("watchDirectory", watchDirectory)
                 .toString();
     }
 

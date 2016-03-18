@@ -33,7 +33,7 @@ public class DtoConverter {
     }
 
     public static ImageMetadataDto getImageMetadataDto(ImageMetadata imageMetadata) {
-        return new ImageMetadataDto(imageMetadata.getFilePath(), imageMetadata.getDimension(),
+        return new ImageMetadataDto(imageMetadata.getId(), imageMetadata.getFilePath(), imageMetadata.getDimension(),
                 imageMetadata.getDpi(), imageMetadata.getBitsPerPixel(),
                 imageMetadata.getFormat(), imageMetadata.getColorType());
     }
