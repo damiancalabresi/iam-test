@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Spring Boot CLI + Javascript</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p><a href="/">Home</a></p>
+<h1>Scan Images</h1>
+<h3>Scan an image</h3>
+<form action="#" th:action="@{/scan/new}" th:object="${filePathDto}" method="post">
+    <input type="text" th:field="*{filePath}" />
+    <input type="submit" />
+</form>
+<h3>Filter results</h3>
+<form action="#" th:action="@{/scan/filter}" th:object="${imageFilterDto}" method="post">
+    <label for="formFilePath">File:</label>
+    <input id="formFilePath" type="text" th:field="*{filePath}" />
+    <label for="formFormat">Format:</label>
+    <input id="formFormat" type="text" th:field="*{format}" />
+    <label for="formDimension">Dimension:</label>
+    <input id="formDimension" type="text" th:field="*{dimension}" />
+    <input type="submit" />
+</form>
+<h3>Scanned</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>File</th>
+        <th>Format</th>
+        <th>Dimension</th>
+        <th>DPI</th>
+        <th>Color Type</th>
+        <th>Bits per pixel</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="image : ${scannedImages}">
+        <td th:text="${image.filePath}"></td>
+        <td th:text="${image.format}"></td>
+        <td th:text="${image.dimension}"></td>
+        <td th:text="${image.dpi}"></td>
+        <td th:text="${image.colorType}"></td>
+        <td th:text="${image.bitsPerPixel}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

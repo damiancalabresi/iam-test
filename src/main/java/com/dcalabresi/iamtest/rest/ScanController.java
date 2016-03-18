@@ -14,7 +14,7 @@ import java.util.List;
  * Created by damian on 3/18/16.
  */
 @RestController
-@RequestMapping("/scan")
+@RequestMapping("/rest/scan")
 public class ScanController {
 
     @Autowired

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Spring Boot CLI + Javascript</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p><a href="/">Home</a></p>
+<h1>Watch a directory</h1>
+<h3>Add a directory</h3>
+<form action="#" th:action="@{/watch/new}" th:object="${directoryPathDto}" method="post">
+    <input type="text" th:field="*{directory}" />
+    <input type="submit" />
+</form>
+<h3>Directories</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Directory</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="directory : ${watchDirectories}">
+        <td th:text="${directory.id}"></td>
+        <td th:text="${directory.directory}"></td>
+        <td><a th:href="@{/watch/delete(directoryId=${directory.id})}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
