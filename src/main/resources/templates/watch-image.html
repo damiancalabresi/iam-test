@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Spring Boot CLI + Javascript</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p><a href="/">Home</a></p>
+<p><a href="/watch/">Directories</a></p>
+<h1>Directory</h1>
+<p th:text="${directory.directory}"></p>
+<h3>Images</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>File</th>
+        <th>Format</th>
+        <th>Dimension</th>
+        <th>DPI</th>
+        <th>Color Type</th>
+        <th>Bits per pixel</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="image : ${images}">
+        <td th:text="${image.filePath}"></td>
+        <td th:text="${image.format}"></td>
+        <td th:text="${image.dimension}"></td>
+        <td th:text="${image.dpi}"></td>
+        <td th:text="${image.colorType}"></td>
+        <td th:text="${image.bitsPerPixel}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,9 +1,6 @@
 package com.dcalabresi.iamtest.rest;
 
-import com.dcalabresi.iamtest.dto.DirectoryPathDto;
-import com.dcalabresi.iamtest.dto.FilePathDto;
-import com.dcalabresi.iamtest.dto.ImageMetadataDto;
-import com.dcalabresi.iamtest.dto.WatchDirectoryDto;
+import com.dcalabresi.iamtest.dto.*;
 import com.dcalabresi.iamtest.entities.ImageMetadata;
 import com.dcalabresi.iamtest.entities.WatchDirectory;
 import com.dcalabresi.iamtest.services.ImageScannerService;
@@ -27,13 +24,13 @@ public class WatchController {
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public WatchDirectoryDto watchDirectory(@RequestBody DirectoryPathDto directoryPathDto) {
         WatchDirectory watchDirectory = watchDirectoryService.newWatchDirectory(directoryPathDto.getDirectory());
-        return getWatchDirectoryDto(watchDirectory);
+        return DtoConverter.getWatchDirectoryDto(watchDirectory);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<WatchDirectoryDto> getWatchDirectories() {
         List<WatchDirectory> watchDirectories = watchDirectoryService.getAll();
-        return getWatchDirectoryDtoList(watchDirectories);
+        return DtoConverter.getWatchDirectoryDtoList(watchDirectories);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -41,17 +38,17 @@ public class WatchController {
         watchDirectoryService.deleteWatchDirectory(id);
     }
 
-    private WatchDirectoryDto getWatchDirectoryDto(WatchDirectory watchDirectory) {
-        if(watchDirectory==null) return null;
-        return new WatchDirectoryDto(watchDirectory.getId(), watchDirectory.getDirectory());
+    @RequestMapping(value = "/scanall", method = RequestMethod.GET)
+    public void scanWatchDirectoryList() {
+        watchDirectoryService.scanWatchDirectoryList();
     }
 
-    private List<WatchDirectoryDto> getWatchDirectoryDtoList(List<WatchDirectory> watchDirectories) {
-        List<WatchDirectoryDto> dtos = new ArrayList<>(watchDirectories.size());
-        for (WatchDirectory watchDirectory : watchDirectories) {
-            dtos.add(getWatchDirectoryDto(watchDirectory));
-        }
-        return dtos;
+    @RequestMapping(value = "/metadata/{id}", method = RequestMethod.GET)
+    public List<ImageMetadataDto> getDirectoryMetadataList(@PathVariable("id") Integer id) {
+        List<ImageMetadata> metadataList = watchDirectoryService.getDirectoryMetadataList(id);
+        return DtoConverter.getImageMetadataDtoList(metadataList);
     }
+
+
 
 }

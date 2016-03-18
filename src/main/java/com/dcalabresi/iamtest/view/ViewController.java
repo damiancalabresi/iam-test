@@ -4,6 +4,7 @@ import com.dcalabresi.iamtest.dto.DirectoryPathDto;
 import com.dcalabresi.iamtest.dto.FilePathDto;
 import com.dcalabresi.iamtest.dto.ImageFilterDto;
 import com.dcalabresi.iamtest.entities.ImageMetadata;
+import com.dcalabresi.iamtest.entities.WatchDirectory;
 import com.dcalabresi.iamtest.services.ImageScannerService;
 import com.dcalabresi.iamtest.services.WatchDirectoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,15 @@ public class ViewController {
     public String watchDelete(@RequestParam("directoryId") Integer directoryId, Model model) {
         watchDirectoryService.deleteWatchDirectory(directoryId);
         return watch(model);
+    }
+
+    @RequestMapping(value = "/watch/image", method = RequestMethod.GET)
+    public String watchImages(@RequestParam("directoryId") Integer directoryId, Model model) {
+        WatchDirectory watchDirectory = watchDirectoryService.get(directoryId);
+        List<ImageMetadata> metadataList = watchDirectoryService.getDirectoryMetadataList(directoryId);
+        model.addAttribute("directory", watchDirectory);
+        model.addAttribute("images", metadataList);
+        return "watch-image";
     }
 
 }

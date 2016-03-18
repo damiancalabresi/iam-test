@@ -18,7 +18,7 @@ public class ImageScannerService {
     ImageMetadataRepository imageMetadataRepository;
 
     public ImageMetadata scanImage(String filePath) {
-        ImageMetadata imageMetadata = ImageMetadataReader.readMetadataFromFile(filePath);
+        ImageMetadata imageMetadata = ImageMetadataReader.readMetadataFromFilePath(filePath);
         if(imageMetadata!=null) imageMetadataRepository.save(imageMetadata);
         return imageMetadata;
     }

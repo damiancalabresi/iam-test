@@ -18,13 +18,15 @@
     <tr>
         <th>Id</th>
         <th>Directory</th>
-        <th>Action</th>
+        <th>See Images</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="directory : ${watchDirectories}">
         <td th:text="${directory.id}"></td>
         <td th:text="${directory.directory}"></td>
+        <td><a th:href="@{/watch/image(directoryId=${directory.id})}">Images</a></td>
         <td><a th:href="@{/watch/delete(directoryId=${directory.id})}">Delete</a></td>
     </tr>
     </tbody>

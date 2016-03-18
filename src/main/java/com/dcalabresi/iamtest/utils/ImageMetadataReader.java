@@ -13,12 +13,16 @@ import java.io.IOException;
  */
 public class ImageMetadataReader {
 
-    public static ImageMetadata readMetadataFromFile(String filePath) {
+    public static ImageMetadata readMetadataFromFilePath(String filePath) {
         File file = new File(filePath);
+        return readMetadataFromFile(file);
+    }
+
+    public static ImageMetadata readMetadataFromFile(File file) {
         try {
             ImageMetadata imageMetadata = new ImageMetadata();
             ImageInfo imageInfo = Imaging.getImageInfo(file);
-            imageMetadata.setFilePath(filePath);
+            imageMetadata.setFilePath(file.getPath());
             imageMetadata.setBitsPerPixel(imageInfo.getBitsPerPixel());
             imageMetadata.setColorType(imageInfo.getColorType().name());
             imageMetadata.setDpi(imageInfo.getPhysicalHeightDpi());
