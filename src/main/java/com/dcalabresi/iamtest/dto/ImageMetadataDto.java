@@ -9,9 +9,7 @@ public class ImageMetadataDto {
 
     private String filePath;
 
-    private Integer width;
-
-    private Integer height;
+    private String dimension;
 
     private Integer dpi;
 
@@ -24,10 +22,9 @@ public class ImageMetadataDto {
     public ImageMetadataDto() {
     }
 
-    public ImageMetadataDto(String filePath, Integer width, Integer height, Integer dpi, Integer bitsPerPixel, String format, String colorType) {
+    public ImageMetadataDto(String filePath, String dimension, Integer dpi, Integer bitsPerPixel, String format, String colorType) {
         this.filePath = filePath;
-        this.width = width;
-        this.height = height;
+        this.dimension = dimension;
         this.dpi = dpi;
         this.bitsPerPixel = bitsPerPixel;
         this.format = format;
@@ -42,20 +39,12 @@ public class ImageMetadataDto {
         this.filePath = filePath;
     }
 
-    public Integer getWidth() {
-        return width;
+    public String getDimension() {
+        return dimension;
     }
 
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
     }
 
     public Integer getDpi() {
@@ -94,8 +83,7 @@ public class ImageMetadataDto {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("filePath", filePath)
-                .add("width", width)
-                .add("height", height)
+                .add("dimension", dimension)
                 .add("dpi", dpi)
                 .add("bitsPerPixel", bitsPerPixel)
                 .add("format", format)

@@ -14,19 +14,20 @@ import java.io.IOException;
 public class ImageMetadataReader {
 
     public static ImageMetadata readMetadataFromFile(String filePath) {
-        ImageMetadata imageMetadata = new ImageMetadata();
         File file = new File(filePath);
         try {
+            ImageMetadata imageMetadata = new ImageMetadata();
             ImageInfo imageInfo = Imaging.getImageInfo(file);
             imageMetadata.setFilePath(filePath);
             imageMetadata.setBitsPerPixel(imageInfo.getBitsPerPixel());
             imageMetadata.setColorType(imageInfo.getColorType().name());
             imageMetadata.setDpi(imageInfo.getPhysicalHeightDpi());
             imageMetadata.setFormat(imageInfo.getFormat().getName());
-            imageMetadata.setHeight(imageInfo.getHeight());
-            imageMetadata.setWidth(imageInfo.getWidth());
+            String dimension = imageInfo.getWidth() + "x" + imageInfo.getHeight();
+            imageMetadata.setDimension(dimension);
+            return imageMetadata;
         } catch (ImageReadException | IOException e) {
+            return null;
         }
-        return imageMetadata;
     }
 }

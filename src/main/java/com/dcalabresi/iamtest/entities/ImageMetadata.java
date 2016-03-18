@@ -2,16 +2,19 @@ package com.dcalabresi.iamtest.entities;
 
 import com.google.common.base.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * Created by damian on 3/18/16.
  */
+@Entity
 public class ImageMetadata {
 
+    @Id
     private String filePath;
 
-    private Integer width;
-
-    private Integer height;
+    private String dimension;
 
     private Integer dpi;
 
@@ -24,10 +27,9 @@ public class ImageMetadata {
     public ImageMetadata() {
     }
 
-    public ImageMetadata(String filePath, Integer width, Integer height, Integer dpi, Integer bitsPerPixel, String format, String colorType) {
+    public ImageMetadata(String filePath, String dimension, Integer dpi, Integer bitsPerPixel, String format, String colorType) {
         this.filePath = filePath;
-        this.width = width;
-        this.height = height;
+        this.dimension = dimension;
         this.dpi = dpi;
         this.bitsPerPixel = bitsPerPixel;
         this.format = format;
@@ -42,20 +44,12 @@ public class ImageMetadata {
         this.filePath = filePath;
     }
 
-    public Integer getWidth() {
-        return width;
+    public String getDimension() {
+        return dimension;
     }
 
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
     }
 
     public Integer getDpi() {
@@ -94,8 +88,7 @@ public class ImageMetadata {
     public String toString() {
         return Objects.toStringHelper(this)
                 .add("filePath", filePath)
-                .add("width", width)
-                .add("height", height)
+                .add("dimension", dimension)
                 .add("dpi", dpi)
                 .add("bitsPerPixel", bitsPerPixel)
                 .add("format", format)

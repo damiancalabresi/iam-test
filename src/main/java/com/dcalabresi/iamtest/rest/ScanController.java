@@ -33,9 +33,9 @@ public class ScanController {
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public List<ImageMetadataDto> getScannedImagesByFilter(@RequestParam("filepath") String filePath,
-                                                           @RequestParam("dimension") String dimension,
-                                                           @RequestParam("format") String format) {
+    public List<ImageMetadataDto> getScannedImagesByFilter(@RequestParam(value = "filepath", defaultValue = "") String filePath,
+                                                           @RequestParam(value = "dimension", defaultValue = "") String dimension,
+                                                           @RequestParam(value = "format", defaultValue = "") String format) {
         List<ImageMetadata> imageMetadatas = imageScannerService.getScannedImagesFilter(filePath, dimension, format);
         return getImageMetadataDtoList(imageMetadatas);
     }
@@ -49,8 +49,8 @@ public class ScanController {
     }
 
     private ImageMetadataDto getImageMetadataDto(ImageMetadata imageMetadata) {
-        return new ImageMetadataDto(imageMetadata.getFilePath(), imageMetadata.getWidth(),
-                imageMetadata.getHeight(), imageMetadata.getDpi(), imageMetadata.getBitsPerPixel(),
+        return new ImageMetadataDto(imageMetadata.getFilePath(), imageMetadata.getDimension(),
+                imageMetadata.getDpi(), imageMetadata.getBitsPerPixel(),
                 imageMetadata.getFormat(), imageMetadata.getColorType());
     }
 
